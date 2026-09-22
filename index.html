@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phô Mai Bò Buồn - Cửa Hàng Độc Lạ</title>
+    <style>
+        /* --- Giao diện chung --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f7f1e3;
+            color: #333;
+            padding-bottom: 60px;
+        }
+
+        header {
+            background-color: #ffb142;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 24px;
+        }
+
+        /* --- Số dư góc phải --- */
+        .balance-container {
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            background-color: #cc8e35;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        /* --- Danh sách sản phẩm --- */
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            text-align: center;
+            padding: 20px;
+            transition: transform 0.3s;
+            border: 2px solid #ffeaa7;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-icon {
+            font-size: 50px;
+            margin-bottom: 15px;
+        }
+
+        .product-name {
+            font-size: 20px;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .product-price {
+            font-size: 18px;
+            color: #e74c3c;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .btn-buy {
+            background-color: #ffb142;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.2s;
+        }
+
+        .btn-buy:hover {
+            background-color: #cc8e35;
+        }
+
+        /* --- Khu vực nạp tiền cuối trang --- */
+        .deposit-section {
+            background-color: #fff;
+            max-width: 500px;
+            margin: 50px auto 20px auto;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            text-align: center;
+            border-top: 5px solid #ffb142;
+        }
+
+        .deposit-section h3 {
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+
+        .code-input {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 2px solid #ffeaa7;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            text-align: center;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .code-input:focus {
+            outline: none;
+            border-color: #ffb142;
+        }
+
+        .btn-redeem {
+            background-color: #2ed573;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.2s;
+        }
+
+        .btn-redeem:hover {
+            background-color: #26af5f;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Thanh đầu trang chứa Tên cửa hàng và Số dư bên phải -->
+    <header>
+        <h1>🧀 Phô Mai Bò Buồn 🐂</h1>
+        <div class="balance-container">
+            Số dư: <span id="balance">0</span>₫
+        </div>
+    </header>
+
+    <!-- Khu vực hiển thị các loại phô mai -->
+    <div class="container">
+        <div class="product-grid">
+            
+            <!-- Vị rác -->
+            <div class="product-card">
+                <div class="product-icon">🗑️</div>
+                <div class="product-name">Phô Mai Vị Rác</div>
+                <div class="product-price">100.000₫</div>
+                <button class="btn-buy" onclick="buyProduct('Phô Mai Vị Rác')">Mua</button>
+            </div>
+
+            <!-- Vị đất -->
+            <div class="product-card">
+                <div class="product-icon">🌱</div>
+                <div class="product-name">Phô Mai Vị Đất</div>
+                <div class="product-price">100.000₫</div>
+                <button class="btn-buy" onclick="buyProduct('Phô Mai Vị Đất')">Mua</button>
+            </div>
+
+            <!-- Vị bò chua -->
+            <div class="product-card">
+                <div class="product-icon">🍋</div>
+                <div class="product-name">Phô Mai Vị Bò Chua</div>
+                <div class="product-price">100.000₫</div>
+                <button class="btn-buy" onclick="buyProduct('Phô Mai Vị Bò Chua')">Mua</button>
+            </div>
+
+        </div>
+
+        <!-- Khu vực nhập mã code nạp tiền cuối trang -->
+        <div class="deposit-section">
+            <h3>Nạp Tiền Vào Tài Khoản</h3>
+            <input type="text" id="promoCode" class="code-input" placeholder="Nhập mã code tại đây...">
+            <button class="btn-redeem" onclick="checkCode()">Nhận</button>
+        </div>
+    </div>
+
+    <!-- Xử lý logic bằng JavaScript -->
+    <script>
+        // Khởi tạo số dư ban đầu bằng 0
+        let currentBalance = 0;
+        const pricePerItem = 100000;
+
+        // Hàm định dạng hiển thị tiền tệ (VD: 1000000 thành 1.000.000)
+        function formatMoney(amount) {
+            return amount.toLocaleString('vi-VN');
+        }
+
+        // Cập nhật số dư hiển thị lên màn hình góc phải
+        function updateBalanceDisplay() {
+            document.getElementById('balance').innerText = formatMoney(currentBalance);
+        }
+
+        // Hàm xử lý khi nhấn nút "Nhận" code
+        function checkCode() {
+            const inputCode = document.getElementById('promoCode').value.trim();
+            
+            if (inputCode === 'KHAITRUONGPHOMAI') {
+                currentBalance += 1000000; // Cộng 1 triệu vào tài khoản
+                updateBalanceDisplay(); // Cập nhật hiển thị số dư
+                alert('🎉 Kích hoạt mã thành công! Bạn đã nhận được 1.000.000₫ vào tài khoản.');
+                document.getElementById('promoCode').value = ''; // Xóa chữ trong ô nhập sau khi nhận thành công
+            } else if (inputCode === '') {
+                alert('Vui lòng nhập mã code trước khi nhấn!');
+            } else {
+                alert('Mã code không chính xác. Vui lòng kiểm tra lại!');
+            }
+        }
+
+        // Hàm xử lý khi nhấn nút "Mua"
+        function buyProduct(productName) {
+            if (currentBalance >= pricePerItem) {
+                currentBalance -= pricePerItem; // Trừ 100.000đ trong số dư tài khoản
+                updateBalanceDisplay(); // Cập nhật lại số dư mới lên góc phải
+                alert(`Đơn hàng [${productName}] đang đợi admin duyệt đơn hàng.`);
+            } else {
+                alert('❌ Số dư tài khoản không đủ! Vui lòng kéo xuống dưới nhập code để nạp thêm tiền.');
+            }
+        }
+
+        // Chạy hiển thị số dư lần đầu tiên khi tải trang
+        updateBalanceDisplay();
+    </script>
+</body>
+</html>
